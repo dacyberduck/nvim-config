@@ -1,0 +1,1 @@
+-- load plugins and their configurations
