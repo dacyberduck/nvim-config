@@ -5,14 +5,24 @@ local configs = {
   -- Treesitter
   "plugins.configs.nvim-treesitter",
 
-  -- Colorschemes
-  "plugins.configs.nvim-colorscheme",
+  -- Lsp
+  "plugins.configs.lsp",
+
+  -- Snippets
+  "plugins.configs.nvim-snippets",
+
+  -- Completion
+  "plugins.configs.nvim-completion",
 
   -- Telescope and plugins
   "plugins.configs.nvim-telescope",
 
+  -- Colorschemes
+  "plugins.configs.nvim-colorscheme",
+
   -- Statusline and Tabline
   "plugins.configs.nvim-statusline",
+  "plugins.configs.nvim-bufferline",
 
   -- Misc plugins
   "plugins.configs.nvim-gitsigns",

@@ -11,7 +11,7 @@ opt.backupskip:append("/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.v
 opt.belloff         = 'all'
 opt.clipboard:append('unnamed,unnamedplus')
 opt.compatible      = false
-opt.completeopt     = 'menuone,noselect,noinsert'
+opt.completeopt     = 'menuone,noselect'
 opt.confirm         = true
 opt.directory       = cache_dir .. "/swap"
 opt.encoding        = 'utf-8'
@@ -30,7 +30,7 @@ opt.ruler           = true
 opt.shell           = '/bin/bash'
 opt.shiftround      = true
 opt.shortmess:append("Aac")
-opt.showbreak       = "`-> "
+opt.showbreak       = "﬌ "
 opt.showmatch       = true
 opt.showmode        = false
 opt.smartcase       = true
