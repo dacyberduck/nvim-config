@@ -24,86 +24,10 @@ if not present then
   end
 end
 
--- init packer with custom options
-packer.init {
-  compile_path = packer_compiled_path,
-  display = {
-    open_fn = function()
-      return require("packer.util").float({border = "single"})
-    end,
-    prompt_border = "single",
-    border = {"┌", "─", "┐", "│", "┘", "─", "└", "│"},
-  },
-  git = {
-    clone_timeout = 600, -- Timeout for git clones, in seconds
-  },
-  auto_clean = true,
-  compile_on_sync = true,
-  auto_reload_compiled = true,
-}
-
--- startup packer
-return packer.startup(
-  function()
-    -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-    --  let packer manage itself
-    use "wbthomason/packer.nvim"
-    -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-
-    -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-    -- neovim impatient
-    use "lewis6991/impatient.nvim"
-    -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-
-    -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-    -- Treesitter
-    use {
-      "nvim-treesitter/nvim-treesitter",
-      run = ":TSUpdate"
-    }
-    use {
-      "nvim-treesitter/playground",
-      after = "nvim-treesitter"
-    }
-    -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-
-    -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-    -- Lsp
-    -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-
-
-    -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-    -- Completion
-    -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-
-
-    -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-    -- Telescope and plugins
-    use {
-      "nvim-telescope/telescope.nvim",
-      requires = {
-        "nvim-lua/plenary.nvim",
-        { "kyazdani42/nvim-web-devicons", opt = true },
-      },
-    }
-    use "ahmedkhalf/project.nvim"
-    use "nvim-telescope/telescope-file-browser.nvim"
-    -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-
-    -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-    -- Git plugins
-    use {
-      "lewis6991/gitsigns.nvim",
-      requires = "nvim-lua/plenary.nvim"
-    }
-    -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-
-    -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-    -- load packer_compiled.lua
-    if vim.fn.filereadable(packer_compiled_path) == 1 then
-      require('packer_compiled')
-    else
-      packer.sync()
-    end
-  end
-)
+require('plugins.initPacker')
+if vim.fn.filereadable(packer_compiled_path) == 0 then
+  packer.sync()
+else
+  require('packer_compiled')
+end
+require('plugins.initPlugins')
