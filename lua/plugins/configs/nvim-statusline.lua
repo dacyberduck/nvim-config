@@ -87,7 +87,7 @@ local components = {
       },
       { -- Filename
         provider = function()
-          return require('feline.providers.file').file_info(vim.fn.expand("%:F"), {type = "relative"}) .. " "
+          return require('feline.providers.file').file_info(vim.fn.expand("%:F"), {}) .. " "
         end,
         hl = {
           fg = "black",
@@ -253,7 +253,7 @@ local components = {
           fg = "black",
           bg = "cyan",
           style = "bold",
-        }
+        },
       },
       {} -- empty end component
     },

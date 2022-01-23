@@ -1,3 +1,6 @@
+-- Neovim Configuration inspired by YetAnotherNeovimConfig
+-- Author: dacyberduck <thecyberduck@tutanota.com>
+
 -- disable unused inbuilt plugins
 vim.g.loaded_gzip              = 1
 vim.g.loaded_tar               = 1

@@ -34,6 +34,5 @@ local configs = {
 }
 
 for i = 1, #configs, 1 do
-  -- pcall(require,configs[i])
-  require(configs[i])
+  pcall(require,configs[i])
 end
