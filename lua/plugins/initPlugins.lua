@@ -1,6 +1,7 @@
 local configs = {
-  -- Impatient plugin
+  -- Useful plugins
   "plugins.configs.nvim-impatient",
+  "plugins.configs.nvim-devicons",
 
   -- Treesitter
   "plugins.configs.nvim-treesitter",

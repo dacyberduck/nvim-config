@@ -30,6 +30,7 @@ return packer.startup(
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
     -- Useful plugins
     use "lewis6991/impatient.nvim"
+    use "kyazdani42/nvim-web-devicons"
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
@@ -52,9 +53,9 @@ return packer.startup(
 
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
     -- Snippets
-    use("hrsh7th/vim-vsnip")
-    use("hrsh7th/vim-vsnip-integ")
-    use("rafamadriz/friendly-snippets")
+    use "hrsh7th/vim-vsnip"
+    use "hrsh7th/vim-vsnip-integ"
+    use "rafamadriz/friendly-snippets"
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
@@ -67,6 +68,8 @@ return packer.startup(
     use {"hrsh7th/cmp-cmdline", after = "nvim-cmp"}
     use {"ray-x/cmp-treesitter", after = "nvim-cmp"}
     use {"hrsh7th/cmp-vsnip", after = "nvim-cmp"}
+    use {"hrsh7th/cmp-calc", after = "nvim-cmp"}
+    use {"hrsh7th/cmp-emoji", after = "nvim-cmp"}
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
@@ -75,7 +78,6 @@ return packer.startup(
       "nvim-telescope/telescope.nvim",
       requires = {
         "nvim-lua/plenary.nvim",
-        { "kyazdani42/nvim-web-devicons", opt = true },
       },
     }
     use "ahmedkhalf/project.nvim"

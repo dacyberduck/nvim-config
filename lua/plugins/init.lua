@@ -10,7 +10,14 @@ if not present then
     -- remove the dir before cloning
     vim.fn.delete(packer_path, "rf")
     -- clone packer
-    vim.fn.system({"git","clone","https://github.com/wbthomason/packer.nvim","--depth","20",packer_path})
+    vim.fn.system({
+      "git",
+      "clone",
+      "https://github.com/wbthomason/packer.nvim",
+      "--depth",
+      "20",
+      packer_path
+    })
     print("Successfully cloned packer at " .. packer_path)
   end
   -- try to add packer using packadd

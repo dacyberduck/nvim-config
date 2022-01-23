@@ -1,15 +1,19 @@
 local lsp = require("feline.providers.lsp")
 local vi_mode_utils = require("feline.providers.vi_mode")
+local cursor_utils = require('feline.providers.cursor')
 
 local force_inactive = {
-  filetypes = {},
+  filetypes = {
+    "NvimTree",
+    "dbui",
+    "packer",
+    "startify",
+    "fugitive",
+    "fugitiveblame",
+    "CHADTree"
+  },
   buftypes = {},
   bufnames = {}
-}
-
-local components = {
-  active = { {}, {}, {}},
-  inactive = { {}, {}, {}},
 }
 
 local colors = {
@@ -60,222 +64,207 @@ local vi_mode_text = {
   SELECT = "SELECT",
   COMMAND = "COMMAND",
   SHELL = "SHELL",
-  TERM = "TERM",
+  TERM = "TERMINAL",
   NONE = "NONE"
 }
 
-local buffer_not_empty = function()
-  if vim.fn.empty(vim.fn.expand("%:t")) ~= 1 then
-    return true
-  end
-  return false
-end
-
-force_inactive.filetypes = {
-  "NvimTree",
-  "dbui",
-  "packer",
-  "startify",
-  "fugitive",
-  "fugitiveblame",
-  "CHADTree"
-}
-
-force_inactive.buftypes = {
-  "terminal",
-}
-
--- LEFT COMPONENTS
+-- LEFT
 -- vi-mode
-components.active[1][1] = {
-  provider = function()
-    return " " .. vi_mode_text[vi_mode_utils.get_vim_mode()] .. " "
-  end,
-  hl = function()
-    local val = {}
-
-    val.bg = vi_mode_utils.get_mode_color()
-    val.fg = "black"
-    val.style = "bold"
-
-    return val
-  end,
-  right_sep = " "
-}
--- filename
-components.active[1][2] = {
-  provider = function()
-    return vim.fn.expand("%:F")
-  end,
-  hl = {
-    fg = "white",
-    bg = "bg",
-    style = "bold"
-  },
-  right_sep = {
-    str = " ",
-    hl = {
-      fg = "white",
-      bg = "bg",
-      style = "bold"
-    }
-  }
-}
-
--- gitBranch
-components.active[1][3] = {
-  provider = "git_branch",
-  hl = {
-    fg = "yellow",
-    bg = "bg",
-    style = "bold",
-  }
-}
--- diffAdd
-components.active[1][4] = {
-  provider = "git_diff_added",
-  hl = {
-    fg = "green",
-    bg = "bg",
-    style = "bold"
-  }
-}
--- diffModfified
-components.active[1][5] = {
-  provider = "git_diff_changed",
-  hl = {
-    fg = "orange",
-    bg = "bg",
-    style = "bold"
-  }
-}
--- diffRemove
-components.active[1][6] = {
-  provider = "git_diff_removed",
-  hl = {
-    fg = "red",
-    bg = "bg",
-    style = "bold"
-  }
-}
-
--- MIDDLE COMPONENTS
--- diagnosticErrors
-components.active[2][5] = {
-  provider = "diagnostic_errors",
-  enabled = function()
-    return lsp.diagnostics_exist(vim.diagnostic.severity.ERROR)
-  end,
-  hl = {
-    fg = "red",
-    style = "bold"
-  }
-}
--- diagnosticWarn
-components.active[2][6] = {
-  provider = "diagnostic_warnings",
-  enabled = function()
-    return lsp.diagnostics_exist(vim.diagnostic.severity.WARN)
-  end,
-  hl = {
-    fg = "yellow",
-    style = "bold"
-  }
-}
--- diagnosticHint
-components.active[2][7] = {
-  provider = "diagnostic_hints",
-  enabled = function()
-    return lsp.diagnostics_exist(vim.diagnostic.severity.HINT)
-  end,
-  hl = {
-    fg = "cyan",
-    style = "bold"
-  }
-}
--- diagnosticInfo
-components.active[2][8] = {
-  provider = "diagnostic_info",
-  enabled = function()
-    return lsp.diagnostics_exist(vim.diagnostic.severity.INFO)
-  end,
-  hl = {
-    fg = "skyblue",
-    style = "bold"
-  }
-}
-
--- RIGHT COMPONENT
--- LspName
-components.active[3][1] = {
-  provider = "lsp_client_names",
-  hl = {
-    fg = "yellow",
-    bg = "bg",
-    style = "bold"
-  },
-  right_sep = " "
-}
--- fileType
-components.active[3][2] = {
-  provider = "file_type",
-  hl = function()
-    local val = {}
-    local filename = vim.fn.expand("%:t")
-    local extension = vim.fn.expand("%:e")
-    val.fg = "white"
-    val.bg = "bg"
-    val.style = "bold"
-    return val
-  end,
-  right_sep = " "
-}
--- lineInfo
-components.active[3][3] = {
-  provider = "position",
-  hl = {
-    fg = "white",
-    bg = "bg",
-    style = "bold"
-  },
-  right_sep = " "
-}
-
--- INACTIVE
-
--- fileType
-components.inactive[1][1] = {
-  provider = "file_type",
-  hl = {
-    fg = "black",
-    bg = "cyan",
-    style = "bold"
-  },
-  left_sep = {
-    str = " ",
-    hl = {
-      fg = "NONE",
-      bg = "cyan"
-    }
-  },
-  right_sep = {
-    {
-      str = " ",
-      hl = {
-        fg = "NONE",
-        bg = "cyan"
-      }
+local components = {
+  active = {
+    { -- ACTIVE LEFT COMPONENTS
+      { -- VIM MODE indicator
+        provider = function()
+          return " " .. vi_mode_text[vi_mode_utils.get_vim_mode()] .. " "
+        end,
+        hl = function()
+          local val = {}
+          val.fg = "black"
+          val.bg = vi_mode_utils.get_mode_color()
+          val.style = "bold"
+          return val
+        end,
+      },
+      { -- Filename
+        provider = function()
+          return require('feline.providers.file').file_info(vim.fn.expand("%:F"), {type = "relative"}) .. " "
+        end,
+        hl = {
+          fg = "black",
+          bg = "skyblue",
+          style = "bold",
+        },
+      },
+      { -- Git branch
+        provider = "git_branch",
+        hl = {
+          fg = "orange",
+          bg = "black",
+          style = "bold"
+        },
+        left_sep = {
+          str = " ",
+          hl = {
+            bg = "black"
+          }
+        }
+      },
+      { -- Git DiffAdd
+        provider = "git_diff_added",
+        hl = {
+          fg = "green",
+          bg = "black",
+          style = "bold"
+        }
+      },
+      { -- Git DiffModified
+        provider = "git_diff_changed",
+        hl = {
+          fg = "yellow",
+          bg = "black",
+          style = "bold"
+        }
+      },
+      { -- Git DiffRemove
+        provider = "git_diff_removed",
+        hl = {
+          fg = "red",
+          bg = "black",
+          style = "bold"
+        }
+      },
+      {
+        provider = "lsp_client_names",
+        hl = {
+          fg = "cyan",
+          bg = "black",
+          style = "bold",
+        },
+        left_sep = " "
+      },
+      {} -- empty end component
     },
-    " "
-  }
+    { -- ACTIVE RIGHT COMPONENTS
+      { -- Diagnostic Info
+        provider = "diagnostic_info",
+        enabled = function()
+          lsp.diagnostics_exist(vim.diagnostic.severity.INFO)
+        end,
+        hl = {
+          fg = "skyblue",
+          bg = "black",
+          style = "bold",
+        },
+        left_sep = {
+          sep = " ",
+          hl = {
+            bg = "black",
+          }
+        },
+        right_sep = {
+          sep = " ",
+          hl = {
+            bg = "black",
+          }
+        }
+      },
+      { -- Diagnostic Warn
+        provider = "diagnostic_warnings",
+        enabled = function()
+          return lsp.diagnostics_exist(vim.diagnostic.severity.WARN)
+        end,
+        hl = {
+          fg = "yellow",
+          style = "bold",
+        },
+      },
+      { -- Diagnostic Hint
+        provider = "diagnostic_hints",
+        enabled = function()
+          return lsp.diagnostics_exist(vim.diagnostic.severity.HINT)
+        end,
+        hl = {
+          fg = "cyan",
+          style = "bold",
+        },
+      },
+      { -- Diagnostic Errors
+        provider = "diagnostic_errors",
+        enabled = function()
+          return lsp.diagnostics_exist(vim.diagnostic.severity.ERROR)
+        end,
+        hl = {
+          fg = "red",
+          style = "bold",
+        },
+      },
+      {
+        provider = " ",
+        hl = { bg = "black" }
+      },
+      { -- File type
+        provider = "file_type",
+        hl = {
+          fg = "black",
+          bg = "skyblue",
+          style = "bold"
+        },
+        left_sep = {
+          str = " ",
+          hl = {
+            bg = "skyblue"
+          }
+        },
+        right_sep = {
+          str = " ",
+          hl = {
+            bg = "skyblue"
+          }
+        }
+      },
+      { -- Cursor position
+        provider = "position",
+        hl = {
+          fg = "black",
+          bg = "cyan",
+          style = "bold",
+        },
+        left_sep = {
+          str = " ",
+          hl = {
+            bg = "cyan"
+          }
+        },
+        right_sep = {
+          str = " ",
+          hl = {
+            bg = "cyan"
+          }
+        }
+      },
+      {} -- empty end component
+    },
+  },
+  inactive = {
+    { -- INACTIVE LEFT COMPONENTS
+      {
+        provider = "file_type",
+        hl = {
+          fg = "black",
+          bg = "cyan",
+          style = "bold",
+        }
+      },
+      {} -- empty end component
+    },
+  },
 }
 
-
-require('feline').setup({
+require("feline").setup({
   theme = colors,
   default_bg = colors.bg,
   default_fg = colors.fg,
   vi_mode_colors = vi_mode_colors,
   components = components,
-  force_inactive = force_inactive,
+  force_inactive = force_inactive
 })
