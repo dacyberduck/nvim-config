@@ -162,7 +162,8 @@ for _, server in ipairs(servers) do
   -- load a config file if present
   -- server config files must reside in plugins/configs/lsp/ directory
   -- derver config file name must be like 'lsp-<server-name>.lua' (Ex: lsp-clangd.lua)
-  local server_conf = pcall(require,'plugins.configs.lsp.lsp-'..server) or {}
+  local present, server_conf = pcall(require,('plugins.configs.lsp.lsp-'..server))
+  if not present then server_conf = {} end
   server_conf.on_attach = on_attach
   server_conf.capabilities = update_capabilities()
   server_conf.flags = { debounce_text_changes = 150, }

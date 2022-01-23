@@ -35,9 +35,14 @@ local lspkind =
   }
 )
 
+local has_words_before = function()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
 cmp.setup({
   completion = {
-    completeopt = "menuone,noinsert",
+    completeopt = "menuone,noselect,noinsert,preview",
   },
   confirm_opts = {
     behavior = cmp.ConfirmBehavior.Replace,
@@ -56,20 +61,20 @@ cmp.setup({
     ['<C-y>'] = cmp.config.disable, -- If you want to remove the default `<C-y>` mapping, You can specify `cmp.config.disable` value.
     ['<C-e>'] = cmp.mapping({i = cmp.mapping.abort(), c = cmp.mapping.close()}),
     ['<CR>'] = cmp.mapping.confirm({behavior = cmp.ConfirmBehavior.Replace,select = true}),
-    ['<Tab>'] = function(fallback)
+    ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       else
         fallback()
       end
-    end,
-    ['<S-Tab>'] = function(fallback)
+    end, {'i', 's', 'c'}),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
       else
         fallback()
       end
-    end,
+    end, {'i', 's', 'c'}),
   },
   formatting = {
     format = function(entry, item)
