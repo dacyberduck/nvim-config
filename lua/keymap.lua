@@ -1,7 +1,5 @@
 -- mappings
-local function map(mode, lhs, rhs, opts)
-  vim.api.nvim_set_keymap(mode, lhs, rhs, opts or {})
-end
+local map = require('utils').map_key
 
 -- Normal mode
 map("n","<C-s>",       '<Cmd>write<CR>', { noremap = true })

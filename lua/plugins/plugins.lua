@@ -17,9 +17,6 @@ local configs = {
   -- Telescope and plugins
   "plugins.configs.nvim-telescope",
 
-  -- Colorschemes
-  "plugins.configs.nvim-colorscheme",
-
   -- Statusline and Tabline
   "plugins.configs.nvim-statusline",
   "plugins.configs.nvim-bufferline",

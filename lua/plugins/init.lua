@@ -1,5 +1,4 @@
 local packer_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-local packer_compiled_path = vim.fn.stdpath("config").."/lua/packer_compiled.lua"
 local present, packer = pcall(require,'packer')
 
 if not present then
@@ -20,17 +19,17 @@ if not present then
     })
     print("Successfully cloned packer at " .. packer_path)
   end
-  -- try to add packer using packadd
-  if pcall(vim.cmd,"packadd packer.nvim") then
-    present, packer = pcall(require, "packer")
-  end
-  -- if packer is still not loaded, error out
-  if not present then
-    print("Error: couldn't load packer!!! disabling plugins!!!")
-    return 1
-  end
+end
+
+-- try to add packer using packadd
+if pcall(vim.cmd,"packadd packer.nvim") then
+  present, packer = pcall(require, "packer")
+  if not present then print "Error: packer can not be loaded!!! disabling plugins!!!" return 1 end
+else
+  print "Error: packer can not be loaded!!! disabling plugins!!!"
+  return 1
 end
 
 require('plugins.packer')
 require('plugins.plugins')
-require('plugins.autocmds')
+require('plugins.autocmd')

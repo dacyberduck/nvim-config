@@ -35,5 +35,8 @@ vim.g.mapleader = " "
 vim.api.nvim_set_keymap('n', ' ', '', {noremap = true})
 vim.api.nvim_set_keymap('x', ' ', '', {noremap = true})
 
-require('core')
+-- configuration files
+require('option')
+require('keymap')
+require('autocmd')
 require('plugins')

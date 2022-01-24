@@ -1,22 +1,10 @@
-require('project_nvim').setup()
-require('telescope').load_extension('projects')
-require('telescope').load_extension('file_browser')
-
 require('telescope').setup{
   defaults = {
-    color_devicons = true,
     borderchars = {"─", "│", "─", "│", "╭", "╮", "╯", "╰"},
     path_display = {"smart"},
     layout_config = {
       horizontal = {
-        width_padding = 0.1,
-        height_padding = 0.1,
-        preview_width = 0.55,
-      },
-      vertical = {
-        width_padding = 0.05,
-        height_padding = 0.1,
-        preview_width = 0.5,
+        preview_width = 0.52,
       },
     },
     mappings = {
@@ -26,14 +14,34 @@ require('telescope').setup{
     },
   },
   pickers = {
-    file_browser = {
-      hidden = true,
-    },
     find_files = {
+      theme = 'ivy',
+      hidden = 1,
+    },
+    live_grep = {
+      theme = 'ivy',
+      hidden = 1,
+    },
+    grep_string = {
+      theme = 'ivy',
       hidden = 1,
     },
   },
+  extensions = {
+    file_browser = {
+      theme = 'ivy',
+      hidden = 1,
+      grouped = 1,
+    },
+    project = {
+      hidden_files = 1,
+    },
+  },
 }
+
+require('project_nvim').setup()
+require('telescope').load_extension('projects')
+require('telescope').load_extension('file_browser')
 
 vim.api.nvim_set_keymap("n","<Leader>tt", '<Cmd>Telescope<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n','<leader>tp','<Cmd>Telescope projects<CR>',{noremap = true})

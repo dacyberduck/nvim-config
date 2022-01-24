@@ -79,6 +79,3 @@ opt.relativenumber  = true
 opt.scrolloff       = 5
 opt.sidescrolloff   = 5
 opt.spell           = false
-
-require('core.mappings')
-require('core.autocmds')
