@@ -2,8 +2,7 @@ local packer_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nv
 local present, packer = pcall(require,'packer')
 
 if not present then
-  -- clone packer if a packer.nvim directory does not
-  -- exist at packer_path
+  -- clone packer if a packer.nvim directory does not exist at packer_path
   if vim.fn.isdirectory(packer_path) ~= 1 then
     print "Cloning packer..."
     -- remove the dir before cloning
@@ -19,15 +18,15 @@ if not present then
     })
     print("Successfully cloned packer at " .. packer_path)
   end
-end
+  -- try to add packer using packadd
+  if pcall(vim.cmd,"packadd packer.nvim") then
+    present, packer = pcall(require, "packer")
+  end
 
--- try to add packer using packadd
-if pcall(vim.cmd,"packadd packer.nvim") then
-  present, packer = pcall(require, "packer")
-  if not present then print "Error: packer can not be loaded!!! disabling plugins!!!" return 1 end
-else
-  print "Error: packer can not be loaded!!! disabling plugins!!!"
-  return 1
+  if not present then
+    print "Error: packer can not be loaded!!! disabling plugins!!!"
+    return 1
+  end
 end
 
 require('plugins.packer')

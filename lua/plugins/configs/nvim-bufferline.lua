@@ -6,12 +6,12 @@ require('cokeline').setup({
   },
   default_hl = {
     focused = {
-      fg = get_hex('PmenuSel', 'fg'),
-      bg = get_hex('PmenuSel', 'bg')
+      fg = get_hex('TablineSel', 'fg'),
+      bg = get_hex('TablineSel', 'bg')
     },
     unfocused = {
-      fg = get_hex('Pmenu', 'fg'),
-      bg = get_hex('Pmenu', 'bg'),
+      fg = get_hex('Tabline', 'fg'),
+      bg = get_hex('Tabline', 'bg'),
     },
   },
 
