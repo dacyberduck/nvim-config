@@ -31,10 +31,6 @@ if not present then
   end
 end
 
-require('plugins.initPacker')
-if vim.fn.filereadable(packer_compiled_path) == 0 then
-  packer.sync()
-else
-  require('packer_compiled')
-end
-require('plugins.initPlugins')
+require('plugins.packer')
+require('plugins.plugins')
+require('plugins.autocmds')

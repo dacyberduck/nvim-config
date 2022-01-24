@@ -1,7 +1,6 @@
 local configs = {
   -- Useful plugins
   "plugins.configs.nvim-impatient",
-  "plugins.configs.nvim-devicons",
 
   -- Treesitter
   "plugins.configs.nvim-treesitter",
@@ -34,5 +33,5 @@ local configs = {
 }
 
 for i = 1, #configs, 1 do
-  pcall(require,configs[i])
+  require(configs[i])
 end

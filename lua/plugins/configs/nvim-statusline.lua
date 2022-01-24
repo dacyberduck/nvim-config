@@ -87,7 +87,9 @@ local components = {
       },
       { -- Filename
         provider = function()
-          return require('feline.providers.file').file_info(vim.fn.expand("%:F"), {}) .. " "
+          -- get file name using inbuilt provider
+          -- takes two args. passing empty args to avoid devicons
+          return require('feline.providers.file').file_info({icon = " ", }, {}) .. " "
         end,
         hl = {
           fg = "black",
@@ -254,6 +256,14 @@ local components = {
           bg = "cyan",
           style = "bold",
         },
+        left_sep = {
+          str = " ",
+          hl = { bg = "cyan" },
+        },
+        right_sep = {
+          str = " ",
+          hl = { bg = "cyan" },
+        }
       },
       {} -- empty end component
     },

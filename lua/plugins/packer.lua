@@ -30,7 +30,6 @@ return packer.startup(
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
     -- Useful plugins
     use "lewis6991/impatient.nvim"
-    use "kyazdani42/nvim-web-devicons"
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
@@ -48,7 +47,6 @@ return packer.startup(
     use "tami5/lspsaga.nvim"
     use "onsails/lspkind-nvim"
     use "ray-x/lsp_signature.nvim"
-    use "kosayoda/nvim-lightbulb"
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
@@ -105,5 +103,12 @@ return packer.startup(
     use "ellisonleao/glow.nvim"
     use "folke/which-key.nvim"
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+
+    -- Sync packer on first install
+    if vim.fn.filereadable(packer_compiled_path) == 0 then
+      packer.sync()
+    else
+      require('packer_compiled')
+    end
   end
 )
