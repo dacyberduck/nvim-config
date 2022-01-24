@@ -1,9 +1,8 @@
 local packer_compiled_path = vim.fn.stdpath("config").."/lua/packer_compiled.lua"
 local packer = require('packer')
 
-if vim.fn.filereadable(packer_compiled_path) == 1 then
-  require('packer_compiled')
-end
+-- load plugins
+pcall(require,'packer_compiled')
 
 -- init packer with custom options
 packer.init {
@@ -67,11 +66,6 @@ return packer.startup(
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
     -- Lsp
     use "neovim/nvim-lspconfig"
-    use "nvim-lua/lsp_extensions.nvim"
-    use "tami5/lspsaga.nvim"
-    use "onsails/lspkind-nvim"
-    use "ray-x/lsp_signature.nvim"
-    use "jose-elias-alvarez/null-ls.nvim"
     use "nvim-lua/lsp_extensions.nvim"
     use "tami5/lspsaga.nvim"
     use "onsails/lspkind-nvim"
