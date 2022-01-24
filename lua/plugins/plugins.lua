@@ -6,7 +6,7 @@ local configs = {
   "plugins.configs.nvim-treesitter",
 
   -- Lsp
-  "plugins.configs.lsp",
+  "plugins.configs.nvim-lspconfig",
 
   -- Snippets
   "plugins.configs.nvim-snippets",
