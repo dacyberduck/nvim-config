@@ -160,7 +160,7 @@ return packer.startup(
         pcall(require,'plugins.configs.nvim-comment')
       end
     }
-    use "ellisonleao/glow.nvim"
+    use {"ellisonleao/glow.nvim", ft = 'markdown'}
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
