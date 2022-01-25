@@ -29,6 +29,5 @@ if not present then
   end
 end
 
-require('plugins.packer')
 require('plugins.plugins')
 require('plugins.autocmd')
