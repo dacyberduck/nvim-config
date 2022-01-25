@@ -6,24 +6,34 @@ require('cokeline').setup({
   },
   default_hl = {
     focused = {
-      fg = get_hex('TablineSel', 'fg'),
-      bg = get_hex('TablineSel', 'bg')
+      fg = get_hex('TabLineSel', 'fg'),
+      bg = get_hex('TabLineSel', 'bg')
     },
     unfocused = {
-      fg = get_hex('Tabline', 'fg'),
-      bg = get_hex('Tabline', 'bg'),
+      fg = get_hex('TabLine', 'fg'),
+      bg = get_hex('TabLine', 'bg'),
     },
   },
 
   components = {
     {
-      text = function(buffer) return (buffer.index ~= 1) and '▏' or '' end,
+      text = function(buffer) return (buffer.index ~= 1) and '▏' or ' ' end,
       hl = {
         fg = get_hex('Normal', 'fg')
       },
     },
     {
-      text = function(buffer) return '    ' .. buffer.filename .. '    ' end,
+      text = function(buffer)
+        return buffer.is_modified and '●' or ' '
+      end,
+      hl = {
+        style = function(buffer) return buffer.is_focused and 'bold' or nil end,
+      }
+    },
+    {
+      text = function(buffer)
+        return '  ' .. buffer.filename .. '   '
+      end,
       hl = {
         style = function(buffer) return buffer.is_focused and 'bold' or nil end,
       }

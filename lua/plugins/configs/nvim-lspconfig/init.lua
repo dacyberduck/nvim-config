@@ -160,9 +160,9 @@ local nvim_lsp = require('lspconfig')
 local servers = { 'clangd', 'pyright', 'rls', 'tsserver' }
 for _, server in ipairs(servers) do
   -- load a config file if present
-  -- server config files must reside in plugins/configs/lsp/ directory
+  -- server config files must reside in plugins/configs/nvim-lspconfig/ directory
   -- derver config file name must be like 'lsp-<server-name>.lua' (Ex: lsp-clangd.lua)
-  local present, server_conf = pcall(require,('plugins.configs.lsp.lsp-'..server))
+  local present, server_conf = pcall(require,('plugins.configs.nvim-lspconfig.lsp-'..server))
   if not present then server_conf = {} end
   server_conf.on_attach = on_attach
   server_conf.capabilities = update_capabilities()

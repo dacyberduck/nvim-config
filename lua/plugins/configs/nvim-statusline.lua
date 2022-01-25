@@ -1,6 +1,7 @@
 local lsp = require("feline.providers.lsp")
 local vi_mode_utils = require("feline.providers.vi_mode")
 local cursor_utils = require('feline.providers.cursor')
+local get_hex = require('utils').get_hex
 
 local force_inactive = {
   filetypes = {
@@ -16,38 +17,52 @@ local force_inactive = {
   bufnames = {}
 }
 
+-- colors are adjusted to match 'kanagawa' colorscheme
 local colors = {
-  bg = "#282828",
-  black = "#282828",
-  yellow = "#d8a657",
-  cyan = "#89b482",
-  oceanblue = "#45707a",
-  green = "#a9b665",
-  orange = "#e78a4e",
-  violet = "#d3869b",
-  magenta = "#c14a4a",
-  white = "#a89984",
-  fg = "#a89984",
-  skyblue = "#7daea3",
-  red = "#ea6962"
+  bg = get_hex("StatusLine","bg"),      -- dark bg
+  bg2 = get_hex("Normal","bg"),         -- bg
+  fg = get_hex("StatusLine","fg"),      -- dark fg
+  fg2 = get_hex("Normal","fg"),         -- fg
+  red = get_hex("diffRemoved","fg"),    -- dark red
+  red2 = get_hex("Exception","fg"),     -- red
+  green = get_hex("diffAdded","fg"),    -- dark green
+  green2 = get_hex("String","fg"),      -- green
+  yellow = get_hex("Operator","fg"),    -- dark yellow
+  yellow2 = get_hex("Identifier","fg"), -- yellow
+  blue = get_hex("Todo","bg"),          -- dark blue
+  blue2 = get_hex("Directory","fg"),    -- blue
+  purple = get_hex("Conceal","fg"),     -- dark violet
+  purple2 = get_hex("Statement","fg"),  -- violet
+  cyan = get_hex("DiagnosticHint","fg"),-- dark cyan
+  cyan2 = get_hex("Type","fg"),         -- cyan
+  orange = get_hex("Constant","fg"),    -- orange
+  pink = get_hex("Number","fg"),        -- pink
+  gray = get_hex("FoldColumn","fg"),    -- gray
+  added = get_hex("DiffAdd","bg"),
+  removed = get_hex("DiffDelete","bg"),
+  changed = get_hex("DiffChange","bg"),
+  error = get_hex("DiagnosticError","fg"),
+  warn = get_hex("DiagnosticWarn","fg"),
+  info = get_hex("DiagnosticInfo","fg"),
+  hint = get_hex("DiagnosticHint","fg"),
 }
 
 local vi_mode_colors = {
-  NORMAL = "green",
+  NORMAL = "green2",
   OP = "green",
-  INSERT = "red",
-  VISUAL = "skyblue",
-  LINES = "skyblue",
-  BLOCK = "skyblue",
-  REPLACE = "violet",
-  ["V-REPLACE"] = "violet",
-  ENTER = "cyan",
+  INSERT = "red2",
+  VISUAL = "blue2",
+  LINES = "blue",
+  BLOCK = "blue2",
+  REPLACE = "purple2",
+  ["V-REPLACE"] = "purple",
+  ENTER = "cyan2",
   MORE = "cyan",
-  SELECT = "orange",
-  COMMAND = "green",
-  SHELL = "green",
-  TERM = "green",
-  NONE = "yellow"
+  SELECT = "pink",
+  COMMAND = "orange2",
+  SHELL = "yellow",
+  TERM = "yellow2",
+  NONE = "gray"
 }
 
 local vi_mode_text = {
@@ -79,7 +94,7 @@ local components = {
         end,
         hl = function()
           local val = {}
-          val.fg = "black"
+          val.fg = "bg"
           val.bg = vi_mode_utils.get_mode_color()
           val.style = "bold"
           return val
@@ -92,54 +107,54 @@ local components = {
           return require('feline.providers.file').file_info({icon = " ", }, {}) .. " "
         end,
         hl = {
-          fg = "black",
-          bg = "skyblue",
+          fg = "bg",
+          bg = "cyan2",
           style = "bold",
         },
       },
       { -- Git branch
         provider = "git_branch",
         hl = {
-          fg = "orange",
-          bg = "black",
+          fg = "orange2",
+          bg = "bg",
           style = "bold"
         },
         left_sep = {
           str = " ",
           hl = {
-            bg = "black"
+            bg = "bg"
           }
         }
       },
       { -- Git DiffAdd
         provider = "git_diff_added",
         hl = {
-          fg = "green",
-          bg = "black",
+          fg = "added",
+          bg = "bg",
           style = "bold"
         }
       },
       { -- Git DiffModified
         provider = "git_diff_changed",
         hl = {
-          fg = "yellow",
-          bg = "black",
+          fg = "changed",
+          bg = "bg",
           style = "bold"
         }
       },
       { -- Git DiffRemove
         provider = "git_diff_removed",
         hl = {
-          fg = "red",
-          bg = "black",
+          fg = "removed",
+          bg = "bg",
           style = "bold"
         }
       },
       {
         provider = "lsp_client_names",
         hl = {
-          fg = "cyan",
-          bg = "black",
+          fg = "cyan2",
+          bg = "bg",
           style = "bold",
         },
         left_sep = " "
@@ -153,20 +168,20 @@ local components = {
           lsp.diagnostics_exist(vim.diagnostic.severity.INFO)
         end,
         hl = {
-          fg = "skyblue",
-          bg = "black",
+          fg = "info",
+          bg = "bg",
           style = "bold",
         },
         left_sep = {
           sep = " ",
           hl = {
-            bg = "black",
+            bg = "bg",
           }
         },
         right_sep = {
           sep = " ",
           hl = {
-            bg = "black",
+            bg = "bg",
           }
         }
       },
@@ -176,7 +191,7 @@ local components = {
           return lsp.diagnostics_exist(vim.diagnostic.severity.WARN)
         end,
         hl = {
-          fg = "yellow",
+          fg = "warn",
           style = "bold",
         },
       },
@@ -186,7 +201,7 @@ local components = {
           return lsp.diagnostics_exist(vim.diagnostic.severity.HINT)
         end,
         hl = {
-          fg = "cyan",
+          fg = "hint",
           style = "bold",
         },
       },
@@ -196,51 +211,51 @@ local components = {
           return lsp.diagnostics_exist(vim.diagnostic.severity.ERROR)
         end,
         hl = {
-          fg = "red",
+          fg = "error",
           style = "bold",
         },
       },
       {
         provider = " ",
-        hl = { bg = "black" }
+        hl = { bg = "bg" }
       },
       { -- File type
         provider = "file_type",
         hl = {
-          fg = "black",
-          bg = "skyblue",
+          fg = "bg",
+          bg = "cyan2",
           style = "bold"
         },
         left_sep = {
           str = " ",
           hl = {
-            bg = "skyblue"
+            bg = "cyan2"
           }
         },
         right_sep = {
           str = " ",
           hl = {
-            bg = "skyblue"
+            bg = "cyan2"
           }
         }
       },
       { -- Cursor position
         provider = "position",
         hl = {
-          fg = "black",
-          bg = "cyan",
+          fg = "bg",
+          bg = "green2",
           style = "bold",
         },
         left_sep = {
           str = " ",
           hl = {
-            bg = "cyan"
+            bg = "green2"
           }
         },
         right_sep = {
           str = " ",
           hl = {
-            bg = "cyan"
+            bg = "green2"
           }
         }
       },
@@ -252,17 +267,17 @@ local components = {
       {
         provider = "file_type",
         hl = {
-          fg = "black",
-          bg = "cyan",
+          fg = "bg",
+          bg = "cyan2",
           style = "bold",
         },
         left_sep = {
           str = " ",
-          hl = { bg = "cyan" },
+          hl = { bg = "cyan2" },
         },
         right_sep = {
           str = " ",
-          hl = { bg = "cyan" },
+          hl = { bg = "cyan2" },
         }
       },
       {} -- empty end component
