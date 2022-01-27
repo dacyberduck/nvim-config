@@ -34,12 +34,12 @@ return packer.startup(
     -- Useful plugins
     use {"lewis6991/impatient.nvim",
       config = function()
-        pcall(require,'plugins.configs.nvim-impatient')
+        require('plugins.configs.nvim-impatient')
       end
     }
     use {"folke/which-key.nvim",
       config = function()
-        pcall(require,'plugins.configs.nvim-whichkey')
+        require('plugins.configs.nvim-whichkey')
       end
     }
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
@@ -49,7 +49,7 @@ return packer.startup(
     use {"nvim-treesitter/nvim-treesitter",
       run = ":TSUpdate",
       config = function()
-        pcall(require,'plugins.configs.nvim-treesitter')
+        require('plugins.configs.nvim-treesitter')
       end
     }
     use {"nvim-treesitter/playground", after = "nvim-treesitter"}
@@ -60,7 +60,7 @@ return packer.startup(
     -- Snippets
     use {"hrsh7th/vim-vsnip",
       config = function()
-        pcall(require,"plugins.configs.nvim-snippets")
+        require("plugins.configs.nvim-snippets")
       end
     }
     use {"hrsh7th/vim-vsnip-integ", after = 'vim-vsnip'}
@@ -71,7 +71,7 @@ return packer.startup(
     -- Completion
     use {"hrsh7th/nvim-cmp",
       config = function()
-        pcall(require,"plugins.configs.nvim-completion")
+        require("plugins.configs.nvim-completion")
       end
     }
     use "hrsh7th/cmp-nvim-lsp"
@@ -88,14 +88,16 @@ return packer.startup(
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
     -- Lsp
     use {"neovim/nvim-lspconfig",
+      requires = {
+        "nvim-lua/lsp_extensions.nvim",
+        "tami5/lspsaga.nvim",
+        "onsails/lspkind-nvim",
+        "ray-x/lsp_signature.nvim",
+      },
       config = function()
-        pcall(require,"plugins.configs.nvim-lspconfig")
+        require("plugins.configs.nvim-lspconfig")
       end
     }
-    use "nvim-lua/lsp_extensions.nvim"
-    use "tami5/lspsaga.nvim"
-    use "onsails/lspkind-nvim"
-    use "ray-x/lsp_signature.nvim"
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
@@ -103,13 +105,13 @@ return packer.startup(
     use {"nvim-telescope/telescope.nvim",
       requires = {
         "nvim-lua/plenary.nvim",
-        -- Telescope extension
+        -- Telescope extensions
         "ahmedkhalf/project.nvim",
         "nvim-telescope/telescope-file-browser.nvim"
       },
       keys = "<leader>t",
       config = function()
-        pcall(require,"plugins.configs.nvim-telescope")
+        require("plugins.configs.nvim-telescope")
       end
     }
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
@@ -124,13 +126,13 @@ return packer.startup(
     use {"feline-nvim/feline.nvim",
       after = 'kanagawa.nvim',
       config = function()
-        pcall(require,'plugins.configs.nvim-statusline')
+        require('plugins.configs.nvim-statusline')
       end
     }
     use {"noib3/nvim-cokeline",
       after = 'kanagawa.nvim',
       config = function()
-        pcall(require,'plugins.configs.nvim-bufferline')
+        require('plugins.configs.nvim-bufferline')
       end
     }
     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
@@ -141,23 +143,23 @@ return packer.startup(
       requires = "nvim-lua/plenary.nvim",
       event = "BufRead",
       config = function()
-        pcall(require,'plugins.configs.nvim-gitsigns')
+        require('plugins.configs.nvim-gitsigns')
       end
     }
     use {"norcalli/nvim-colorizer.lua",
       opts = true,
       config = function()
-        pcall(require,'plugins.configs.nvim-colorizer')
+        require('plugins.configs.nvim-colorizer')
       end
     }
     use {"lukas-reineke/indent-blankline.nvim",
       config = function()
-        pcall(require,'plugins.configs.nvim-indentline')
+        require('plugins.configs.nvim-indentline')
       end
     }
     use {"terrortylor/nvim-comment",
       config = function()
-        pcall(require,'plugins.configs.nvim-comment')
+        require('plugins.configs.nvim-comment')
       end
     }
     use {"ellisonleao/glow.nvim", ft = 'markdown'}

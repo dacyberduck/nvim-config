@@ -1,3 +1,9 @@
+local present, feline = pcall(require,"feline")
+if not present then
+  print "Error: feline not found!!!"
+  return 1
+end
+
 local lsp = require("feline.providers.lsp")
 local vi_mode_utils = require("feline.providers.vi_mode")
 local cursor_utils = require('feline.providers.cursor')
@@ -6,7 +12,6 @@ local get_hex = require('utils').get_hex
 local force_inactive = {
   filetypes = {
     "NvimTree",
-    "dbui",
     "packer",
     "startify",
     "fugitive",
@@ -215,7 +220,7 @@ local components = {
           style = "bold",
         },
       },
-      {
+      { -- empty space(" ") component
         provider = " ",
         hl = { bg = "bg" }
       },
@@ -264,28 +269,33 @@ local components = {
   },
   inactive = {
     { -- INACTIVE LEFT COMPONENTS
+      { -- Filename
+        provider = function()
+          -- get file name using inbuilt provider
+          -- takes two args. passing empty args to avoid devicons
+          return require('feline.providers.file').file_info({icon = " ", }, {}) .. " "
+        end,
+        hl = {
+          fg = "bg",
+          bg = "gray",
+          style = "bold",
+        },
+      },
       {
         provider = "file_type",
         hl = {
-          fg = "bg",
-          bg = "cyan2",
+          fg = "gray",
           style = "bold",
         },
-        left_sep = {
-          str = " ",
-          hl = { bg = "cyan2" },
-        },
-        right_sep = {
-          str = " ",
-          hl = { bg = "cyan2" },
-        }
+        left_sep =  " ",
+        right_sep = " ",
       },
       {} -- empty end component
     },
   },
 }
 
-require("feline").setup({
+feline.setup({
   theme = colors,
   default_bg = colors.bg,
   default_fg = colors.fg,

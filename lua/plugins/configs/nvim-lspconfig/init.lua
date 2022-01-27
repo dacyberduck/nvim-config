@@ -1,31 +1,35 @@
+local present, nvim_lsp = pcall(require,'lspconfig')
+if not present then
+  printf('Error: lspconfig not found!!!')
+  return 1
+end
+
 local protocol = require('vim.lsp.protocol')
+local bufmap = require('utils').buf_map_key
 
 local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
   -- Enable completion triggered by <c-x><c-o>
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+  vim.api.nvim_buf_set_option(bufnr,'omnifunc','v:lua.vim.lsp.omnifunc')
 
   -- Mappings.
   local opts = { noremap=true, silent=true }
 
   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  buf_set_keymap('n', 'gd', '<cmd>Lspsaga lsp_finder<CR>', opts)
-  buf_set_keymap("n", "K",  "<cmd>Lspsaga hover_doc<cr>", opts)
-  buf_set_keymap("n", "gr", "<cmd>Lspsaga rename<cr>", opts)
-  buf_set_keymap("n", "gx", "<cmd>Lspsaga code_action<cr>", opts)
-  buf_set_keymap("x", "gx", ":<c-u>Lspsaga range_code_action<cr>", opts)
-  buf_set_keymap("n", "go", "<cmd>Lspsaga show_line_diagnostics<cr>", opts)
-  buf_set_keymap("n", "gj", "<cmd>Lspsaga diagnostic_jump_next<cr>", opts)
-  buf_set_keymap("n", "gk", "<cmd>Lspsaga diagnostic_jump_prev<cr>", opts)
-  buf_set_keymap('n', 'gq', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', '<leader>lwa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<leader>lwr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<leader>lwp', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  buf_set_keymap('n', '<leader>lbf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  bufmap(bufnr, 'n', 'gd', '<cmd>Lspsaga lsp_finder<CR>', opts)
+  bufmap(bufnr, "n", "K",  "<cmd>Lspsaga hover_doc<cr>", opts)
+  bufmap(bufnr, "n", "gr", "<cmd>Lspsaga rename<cr>", opts)
+  bufmap(bufnr, "n", "gx", "<cmd>Lspsaga code_action<cr>", opts)
+  bufmap(bufnr, "x", "gx", ":<c-u>Lspsaga range_code_action<cr>", opts)
+  bufmap(bufnr, "n", "go", "<cmd>Lspsaga show_line_diagnostics<cr>", opts)
+  bufmap(bufnr, "n", "gj", "<cmd>Lspsaga diagnostic_jump_next<cr>", opts)
+  bufmap(bufnr, "n", "gk", "<cmd>Lspsaga diagnostic_jump_prev<cr>", opts)
+  bufmap(bufnr, 'n', 'gq', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+  bufmap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  bufmap(bufnr, 'n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  bufmap(bufnr, 'n', '<leader>lwa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  bufmap(bufnr, 'n', '<leader>lwr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  bufmap(bufnr, 'n', '<leader>lwp', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  bufmap(bufnr, 'n', '<leader>lbf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
   -- Set autocommands conditional on server_capabilities
   if client.resolved_capabilities.document_highlight then
@@ -156,7 +160,6 @@ vim.lsp.handlers["textDocument/codeLens"] =
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local nvim_lsp = require('lspconfig')
 local servers = { 'clangd', 'pyright', 'rls', 'tsserver' }
 for _, server in ipairs(servers) do
   -- load a config file if present

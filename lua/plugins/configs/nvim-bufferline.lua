@@ -1,3 +1,9 @@
+local present, cokeline = pcall(require,'cokeline')
+if not present then
+  print "Error: cokeline not found!!!"
+  return 1
+end
+
 local get_hex = require("cokeline.utils").get_hex
 require('cokeline').setup({
   show_if_buffers_are_at_least = 2,

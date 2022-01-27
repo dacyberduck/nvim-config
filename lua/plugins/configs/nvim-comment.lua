@@ -1,4 +1,10 @@
-require('nvim_comment').setup({
+local present, nvim_comment = pcall(require,'nvim_comment')
+if not present then
+  print "Error: nvim-comment not found!!!"
+  return 1
+end
+
+nvim_comment.setup({
   -- Linters prefer comment and line to have a space in between markers
   marker_padding = true,
   -- should comment out empty or whitespace only lines

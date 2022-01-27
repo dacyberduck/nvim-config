@@ -1,4 +1,10 @@
-require'nvim-treesitter.configs'.setup {
+local present, ts_config = pcall(require,'nvim-treesitter.configs')
+if not present then
+  print "Error: treesitter not found!!!"
+  return 1
+end
+
+ts_config.setup {
   sync_install = true,
   ensure_installed = {
     -- "javascript",

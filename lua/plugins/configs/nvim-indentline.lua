@@ -1,4 +1,10 @@
-require("indent_blankline").setup {
+local present, indentline = pcall(require,'indent_blankline')
+if not present then
+  print "Error: indent-blankline not found!!!"
+  return 1
+end
+
+indentline.setup {
   -- use_treesitter = true,
   filetype_exclude = {
     "aerial",

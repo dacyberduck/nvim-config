@@ -1,4 +1,10 @@
-require('colorizer').setup(
+local present, colorizer = pcall(require,'colorizer')
+if not present then
+  print "Error: colorizer not found!!!"
+  return 1
+end
+
+colorizer.setup(
   {"*"},
   {
     RGB = true, -- #RGB hex codes

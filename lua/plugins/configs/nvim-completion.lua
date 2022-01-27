@@ -1,4 +1,9 @@
-local cmp = require('cmp')
+local present, cmp = pcall(require,'cmp')
+if not present then
+  print "Error: cmp not found!!!"
+  return 1
+end
+
 local lsp_symbols = {
   Text = "   (Text) ",
   Method = "   (Method)",

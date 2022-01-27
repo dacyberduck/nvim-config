@@ -1,4 +1,10 @@
-require('telescope').setup{
+local present, telescope = pcall(require,'telescope')
+if not present then
+  print "Error: telescope not found!!!"
+  return 1
+end
+
+telescope.setup{
   defaults = {
     borderchars = {"─", "│", "─", "│", "╭", "╮", "╯", "╰"},
     path_display = {"smart"},
@@ -40,8 +46,8 @@ require('telescope').setup{
 }
 
 require('project_nvim').setup()
-require('telescope').load_extension('projects')
-require('telescope').load_extension('file_browser')
+telescope.load_extension('projects')
+telescope.load_extension('file_browser')
 
 vim.api.nvim_set_keymap("n","<Leader>tt", '<Cmd>Telescope<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n','<leader>tp','<Cmd>Telescope projects<CR>',{noremap = true})

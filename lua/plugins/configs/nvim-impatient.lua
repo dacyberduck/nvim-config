@@ -1,4 +1,7 @@
 local present, impatient = pcall(require,'impatient')
-if not present then return end
+if not present then
+  print("Error: impatient not found!!!")
+  return 1
+end
 
-require('impatient').enable_profile()
+impatient.enable_profile()
