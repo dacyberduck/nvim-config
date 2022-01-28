@@ -24,8 +24,7 @@ map("n","<A-t>",       '<Cmd>split | resize 10 | term<CR>i', {noremap = true})
 
 -- Insert mode
 map("i","<C-s>",       '<Esc><Cmd>write<CR>', { noremap = true })
-map("i","<C-h>",       '<C-w>', { noremap = true })
-map("i","<C-BS>",      '<C-w>', { noremap = true })
+map("i","<A-BS>",      '<C-w>', { noremap = true })
 
 -- Visual mode
 map("v","H",           'g^', { noremap = true })
@@ -37,8 +36,7 @@ map("v",">",           '>gv', { noremap = true })
 -- Command mode
 map("c","<C-b>",       '<Left>', { noremap = true })
 map("c","<C-f>",       '<Right>', { noremap = true })
-map("c","<C-h>",       '<C-w>', { noremap = true })
-map("c","<C-BS>",      '<C-w>', { noremap = true })
+map("c","<A-BS>",      '<C-w>', { noremap = true })
 
 -- Terminal mode
 map("t","<A-q>",       '<C-\\><C-n> <Cmd>bd!<CR>', {noremap = true})
